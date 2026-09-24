@@ -118,64 +118,58 @@
 
 			partition@0 {
 				label = "bl2";
-				reg = <0x00000000 0x00100000>;
+				reg = <0x0000000 0x0100000>;
 				read-only;
 			};
 
 			partition@100000 {
 				label = "u-boot-env";
-				reg = <0x00100000 0x00100000>;
+				reg = <0x0100000 0x0080000>;
 			};
 
-			partition@200000 {
-				label = "fip";
-				reg = <0x00200000 0x00200000>;
-				read-only;
-			};
-
-			factory: partition@400000 {
-				label = "factory";
-				reg = <0x00400000 0x00080000>;
-				read-only;
+			partition@180000 {
+				label = "art";
+				reg = <0x0180000 0x0100000>;
 
 				nvmem-layout {
 					compatible = "fixed-layout";
 					#address-cells = <1>;
 					#size-cells = <1>;
 
-					macaddr_factory: macaddr@1c {
+					eeprom_art_0: eeprom@0 {
+						reg = <0x0 0x1000>;
+					};
+
+					macaddr_lan: macaddr@24 {
 						compatible = "mac-base";
-						reg = <0x1c 0x6>;
+						reg = <0x24 0x6>;
+						#nvmem-cell-cells = <1>;
+					};
+
+					macaddr_wan: macaddr@2a {
+						compatible = "mac-base";
+						reg = <0x2a 0x6>;
 						#nvmem-cell-cells = <1>;
 					};
 				};
 			};
 
-			eeprom: partition@480000 {
-				label = "eeprom";
-				reg = <0x00480000 0x00080000>;
+			factory: partition@280000 {
+				label = "Factory";
+				reg = <0x0280000 0x0100000>;
 				read-only;
-
-				nvmem-layout {
-					compatible = "fixed-layout";
-					#address-cells = <1>;
-					#size-cells = <1>;
-
-					eeprom_wifi: eeprom@0 {
-						reg = <0x0 0x1000>;
-					};
-				};
 			};
 
-			partition@500000 {
-				label = "stock-config";
-				reg = <0x00500000 0x00200000>;
+			partition@380000 {
+				label = "fip";
+				reg = <0x0380000 0x0200000>;
+				read-only;
 			};
 
-			partition@700000 {
+			partition@580000 {
 				label = "ubi";
 				compatible = "linux,ubi";
-				reg = <0x00700000 0x07900000>;
+				reg = <0x0580000 0x7200000>;
 			};
 		};
 	};
