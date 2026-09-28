@@ -136,20 +136,8 @@
 					#address-cells = <1>;
 					#size-cells = <1>;
 
-					eeprom_art_0: eeprom@0 {
+					eeprom_wifi: eeprom@0 {
 						reg = <0x0 0x1000>;
-					};
-
-					macaddr_lan: macaddr@24 {
-						compatible = "mac-base";
-						reg = <0x24 0x6>;
-						#nvmem-cell-cells = <1>;
-					};
-
-					macaddr_wan: macaddr@2a {
-						compatible = "mac-base";
-						reg = <0x2a 0x6>;
-						#nvmem-cell-cells = <1>;
 					};
 				};
 			};
@@ -158,6 +146,17 @@
 				label = "Factory";
 				reg = <0x0280000 0x0100000>;
 				read-only;
+				nvmem-layout {
+					compatible = "fixed-layout";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					macaddr_factory: macaddr@1c {
+						compatible = "mac-base";
+						reg = <0x1c 0x6>;
+						#nvmem-cell-cells = <1>;
+					};
+				};
 			};
 
 			partition@380000 {
